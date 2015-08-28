@@ -1,0 +1,139 @@
+*, *:before, *:after {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+html, body {
+    min-height: 100%;
+    background-color: #142038;
+}
+
+h1, h2, h3, h4, h5, h6, p, a, strong, em {
+    color: #FDFDFD;
+}
+
+html, button, input, select, textarea,
+.pure-g [class *= "pure-u"] {
+    /* Set your content font stack here: */
+    font-family: 'Noto Sans', 'Helvetica', sans-serif;
+}
+
+.full-height {
+    height: 100%;
+    background-color: #142038;
+}
+
+.drop-shadow {
+    -webkit-box-shadow: 0px 7px 8px 0px rgba(36,36,36,0.3);
+    -moz-box-shadow: 0px 7px 8px 0px rgba(36,36,36,0.3);
+    box-shadow: 0px 7px 8px 0px rgba(36,36,36,0.3);
+}
+
+.button-success,
+.button-error,
+.button-warning,
+.button-secondary {
+    color: white;
+    border-radius: 0px;
+    text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+}
+
+.button-success {
+    background: rgb(28, 184, 65); /* this is a green */
+}
+
+.button-error {
+    background: rgb(202, 60, 60); /* this is a maroon */
+}
+
+.button-warning {
+    background: rgb(223, 117, 20); /* this is an orange */
+}
+
+.button-secondary {
+    background: rgb(66, 184, 221); /* this is a light blue */
+}
+
+.button-xsmall {
+    font-size: 70%;
+    padding: 0.25em auto;
+}
+
+.full-width {
+    width: 100%;
+}
+
+.search {
+    border-radius: 0px !important;
+    height: 40px;
+    margin: 0 !important;
+}
+
+.no-radius {
+    border-radius: 0px !important;
+}
+
+.fixed {
+    position: fixed;
+}
+
+.show-search {
+    top: 80px;
+    -webkit-transition: all 250ms !important;
+    -moz-transition: all 250ms !important;
+    -ms-transition: all 250ms !important;
+    -o-transition: all 250ms !important;
+    transition: all 250ms !important;
+}
+
+.offscreen {
+    top: -80px;
+}
+
+.show-search.offscreen {
+    top: 0px;
+}
+
+.search-form {
+    width: 100%;
+}
+
+.animated {
+    -webkit-transition: all 250ms;
+    -moz-transition: all 250ms;
+    -ms-transition: all 250ms;
+    -o-transition: all 250ms;
+    transition: all 250ms;
+}
+
+a {
+    text-decoration: none;
+}
+
+span.live {
+    font-weight: bold;
+    color: #40BF5B;
+}
+
+span.offline {
+    font-weight: bold;
+    color: #C15644;
+}
+
+.fixed-button {
+    position: fixed;
+    top: 50%;
+}
+
+.fixed-button-left {
+    left: 0px;
+}
+
+.fixed-button-right {
+    right: 0px;
+}
+
+.spacer {
+    height: 20px;
+}
