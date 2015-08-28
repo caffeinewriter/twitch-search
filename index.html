@@ -40,7 +40,10 @@
                 <a ng-href="{{channel.url || channel.channel.url}}">
                     <img class="pure-img" ng-src="{{channel.preview.large || channel.logo || default_profile_image}}" />
                     <div>
-                        <strong>{{channel.display_name || channel.channel.display_name}}</strong> playing <strong>{{channel.game}}</strong>
+                        <strong>{{channel.display_name || channel.channel.display_name}}</strong>
+                    </div>
+                    <div>
+                        <small>Playing <strong>{{channel.game}}</strong></small>
                     </div>
                     <div>
                         <em>{{channel.status || channel.channel.status}}</em>
