@@ -45,7 +45,7 @@
                         <em>{{channel.status || channel.channel.status}}</em>
                     </div>
                     <div>
-                        <i class="fa fa-heart"></i> {{channel.followers || channel.channel.followers}} | <i class="fa fa-eye"></i> {{channel.views || channel.channel.views}}<span ng-if="!!channel.viewers"> | <i class="fa fa-users"></i> {{channel.viewers}}</span>
+                        <span title="Followers"><i class="fa fa-heart"></i> {{channel.followers || channel.channel.followers}}</span> | <span title="Views"><i class="fa fa-eye"></i> {{channel.views || channel.channel.views}}</span><span ng-if="!!channel.viewers"> | <span title="Current Viewers"><i class="fa fa-users"></i> {{channel.viewers}}</span></span>
                     </div>
                 </a>
             </div>
@@ -54,6 +54,16 @@
             </div>
             <div class="fixed-button fixed-button-right" ng-if="links.next">
                 <button ng-click="doSearch('next')" type="button" class="pure-button button-primary">Next <i class="fa fa-chevron-right"></i></button>
+            </div>
+        </div>
+        <div class="pure-u-1-24"></div>
+        <div class="pure-u-1-24"></div>
+        <div class="pure-u-11-12">
+            <hr>
+            <div class="about">
+                <p>
+                    This site is designed to be a relatively simple search engine for Twitch. It's still in early alpha, but it should work wonderfully. This search engine will allow you to search live Twitch channels, or all Twitch channels. More functionality will be added as time goes on.
+                </p>
             </div>
             <div><small>&copy; Brandon Anzaldi 2015 | Not affiliated with Twitch.tv or its subsidiaries. Just a site made by a fan.</small></div>
         </div>
