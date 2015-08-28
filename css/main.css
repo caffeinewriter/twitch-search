@@ -137,3 +137,7 @@ span.offline {
 .spacer {
     height: 20px;
 }
+
+.channel-box {
+    padding: 5px;
+}

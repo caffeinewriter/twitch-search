@@ -4,7 +4,8 @@
     <meta charset="UTF-8">
     <title>Twitch Search</title>
     <link href='https://fonts.googleapis.com/css?family=Noto+Sans:400,700' rel='stylesheet' type="text/css">
-    <link href="//cdnjs.cloudflare.com/ajax/libs/pure/0.6.0/pure-min.css" rel="stylesheet" type="text/css">
+    <link href="http://yui.yahooapis.com/pure/0.6.0/pure-min.css" rel="stylesheet" type="text/css">
+    <link href="http://yui.yahooapis.com/pure/0.6.0/grids-responsive-min.css" rel="stylesheet" type="text/css">
     <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
     <link href="css/main.css" rel="stylesheet" type="text/css">
 </head>
@@ -34,7 +35,7 @@
         <div class="pure-u-1-24"></div>
         <div class="pure-u-11-12">
             <h1 ng-if="!!search.last">Results for {{search.last}}</h1>
-            <div class="pure-u-1-6" ng-repeat="channel in channels">
+            <div class="pure-u-1-1 pure-u-md-1-2 pure-u-lg-1-4 pure-u-xl-1-6 channel-box" ng-repeat="channel in channels">
                 <a ng-href="{{channel.url || channel.channel.url}}">
                     <img class="pure-img" ng-src="{{channel.preview.large || channel.logo || default_profile_image}}" />
                     <div>
