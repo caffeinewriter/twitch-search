@@ -34,7 +34,8 @@
         <div class="spacer"></div>
         <div class="pure-u-1-24"></div>
         <div class="pure-u-11-12">
-            <h1 ng-if="!!search.last">Results for {{search.last}}</h1>
+            <h1>Search Twitch</h1>
+            <h2 ng-if="!!search.last">Results for {{search.last}}</h2>
             <div class="pure-u-1-1 pure-u-md-1-2 pure-u-lg-1-4 pure-u-xl-1-6 channel-box" ng-repeat="channel in channels">
                 <a ng-href="{{channel.url || channel.channel.url}}">
                     <img class="pure-img" ng-src="{{channel.preview.large || channel.logo || default_profile_image}}" />
