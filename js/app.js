@@ -23,7 +23,10 @@ searchApp.constant('config', {
         'beta',
         'extreme',
         'retro',
-        'blind'
+        'blind',
+        'new',
+        'league',
+        'interact'
     ]
 });
 
@@ -59,6 +62,11 @@ searchApp.controller('SearchController', ['$scope', '$http', 'config',
                     $scope.links = data._links;
                 });
         };
+
+        $scope.feelingLucky = function () {
+            $scope.search.query = config.random_terms[Math.floor(Math.random() * config.random_terms.length)];
+            $scope.doSearch();
+        }
 
         $scope.checkLive = function (channel) {
             $http({

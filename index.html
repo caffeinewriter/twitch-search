@@ -3,14 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Twitch Search</title>
+    <title>Search Twitch - Search Live Twitch Channels</title>
+    <style>
+        .pace{-webkit-pointer-events:none;pointer-events:none;-webkit-user-select:none;-moz-user-select:none;user-select:none;position:fixed;top:0;left:0;width:100%;-webkit-transform:translate3d(0, -50px, 0);-ms-transform:translate3d(0, -50px, 0);transform:translate3d(0, -50px, 0);-webkit-transition:-webkit-transform .5s ease-out;-ms-transition:-webkit-transform .5s ease-out;transition:transform .5s ease-out}.pace.pace-active{-webkit-transform:translate3d(0, 0, 0);-ms-transform:translate3d(0, 0, 0);transform:translate3d(0, 0, 0)}.pace .pace-progress{display:block;position:fixed;z-index:2000;top:0;right:100%;width:100%;height:10px;background:#29d;pointer-events:none}
+    </style>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/pace/1.0.2/pace.min.js"></script>
     <link href='https://fonts.googleapis.com/css?family=Noto+Sans:400,700' rel='stylesheet' type="text/css">
     <link href="http://yui.yahooapis.com/pure/0.6.0/pure-min.css" rel="stylesheet" type="text/css">
     <link href="http://yui.yahooapis.com/pure/0.6.0/grids-responsive-min.css" rel="stylesheet" type="text/css">
     <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
     <link href="css/main.css" rel="stylesheet" type="text/css">
 </head>
-<body ng-app="search">
+<body ng-app="search" class="ng-cloak">
     <div class="full-height pure-g" ng-controller="SearchController">
         <!--<div class="pure-u-1-1 drop-shadow menu">
             <div class="pure-menu pure-menu-horizontal">
@@ -22,10 +26,13 @@
                 <input type="text" class="pure-input-1 search" placeholder="Search..." name="search" ng-model="search.query" />
             </div>
             <div class="pure-u-1-4">
-                <button ng-click="search.type = !search.type" type="button" class="pure-button pure-input-1 search" ng-class="{'button-success': search.type, 'button-warning': !search.type}">{{ search.type ? 'Live' : 'All' }}</button>
+                <button ng-click="search.type = !search.type" type="button" class="pure-button pure-input-1 search" ng-class="{'button-success': search.type, 'button-warning': !search.type}"><i class="fa" ng-class="{'fa-circle': search.type, 'record': search.type, 'fa-video-camera': !search.type}"></i> {{ search.type ? 'Live' : 'All' }}</button>
             </div>
-            <div class="pure-u-1-1">
+            <div class="pure-u-3-4">
                 <button class="pure-button pure-button-primary pure-input-1 search" type="submit">Onward!</button>
+            </div>
+            <div class="pure-u-1-4">
+                <button class="pure-button button-warning pure-input-1 search" ng-click="feelingLucky()" type="button"><i class="fa fa-random"></i> Random</button>
             </div>
         </form>
         <div class="pure-u-1-1">
