@@ -54,7 +54,7 @@
                         <small>Playing <strong>{{channel.game}}</strong></small>
                     </div>
                     <div>
-                        <em>{{channel.status || channel.channel.status}}</em>
+                        <em class="channel-status">{{channel.status || channel.channel.status}}</em>
                     </div>
                     <div>
                         <span title="Followers"><i class="fa fa-heart"></i> {{channel.followers || channel.channel.followers}}</span> | <span title="Views"><i class="fa fa-eye"></i> {{channel.views || channel.channel.views}}</span><span ng-if="!!channel.viewers"> | <span title="Current Viewers"><i class="fa fa-users"></i> {{channel.viewers}}</span></span>

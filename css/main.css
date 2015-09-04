@@ -6,7 +6,7 @@
 
 html, body {
     min-height: 100%;
-    background-color: #4527a0;
+    background-color: #2D2D39;
 }
 
 h1, h2, h3, h4, h5, h6, p, a, strong, em, small {
@@ -22,7 +22,7 @@ html, button, input, select, textarea,
 
 .full-height {
     height: 100%;
-    background-color: #4527a0;
+    background-color: #2D2D39;
 }
 
 .drop-shadow {
@@ -41,19 +41,19 @@ html, button, input, select, textarea,
 }
 
 .button-success {
-    background: #43a047; /* this is a green */
+    background: #92C7A3;
 }
 
 .button-error {
-    background: rgb(202, 60, 60); /* this is a maroon */
+    background: #3CA2A2;
 }
 
 .button-warning {
-    background: #ef6c00; /* this is an orange */
+    background: #215A6D; /* this is an orange */
 }
 
 .button-secondary {
-    background: rgb(66, 184, 221); /* this is a light blue */
+    background: #215A6D; /* this is a light blue */
 }
 
 .button-xsmall {
@@ -62,7 +62,7 @@ html, button, input, select, textarea,
 }
 
 .pure-button-primary {
-    background-color: #1e88e5;
+    background-color: #215A6D;
 }
 
 .full-width {
@@ -185,4 +185,8 @@ span.offline {
 
 [ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
     display: none !important;
+}
+
+.channel-status {
+    font-size: smaller;
 }
