@@ -102,6 +102,11 @@ html, button, input, select, textarea,
 
 .search-form {
     width: 100%;
+    z-index: 50;
+}
+
+.search-button {
+    z-index: 50;
 }
 
 .animated {
@@ -189,4 +194,27 @@ span.offline {
 
 .channel-status {
     font-size: smaller;
+}
+
+
+.sponsored-box {
+    background-color: #1D1D29;
+}
+
+.live-image {
+    position: relative;
+    top: -25px;
+    left: 5px;
+    width: 15px;
+    height: 15px;
+    z-index: 0;
+    border-radius: 50%;
+}
+
+.live-image.live {
+    background-color: #3F1
+}
+
+.live-image.offline {
+    background-color: #F13;
 }

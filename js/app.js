@@ -33,6 +33,7 @@ searchApp.constant('config', {
 searchApp.controller('SearchController', ['$scope', '$http', 'config',
     function ($scope, $http, config) {
         $scope.search = {};
+        $scope.liveStatus = {};
         $scope.default_profile_image = config.default_profile_image;
         $scope.getUrl = function (action) {
             $scope.type = $scope.search.type ? 'streams' : 'channels';
@@ -66,7 +67,7 @@ searchApp.controller('SearchController', ['$scope', '$http', 'config',
         $scope.feelingLucky = function () {
             $scope.search.query = config.random_terms[Math.floor(Math.random() * config.random_terms.length)];
             $scope.doSearch();
-        }
+        };
 
         $scope.checkLive = function (channel) {
             $http({
@@ -74,10 +75,30 @@ searchApp.controller('SearchController', ['$scope', '$http', 'config',
                 url: 'https://api.twitch.tv/kraken/streams/' + encodeURIComponent(channel) + '?callback=JSON_CALLBACK'
             })
                 .success(function (data) {
-                    return (data === null);
-                })
+                    console.log(data.stream);
+                    if (data.stream !== null) {
+                        $scope.liveStatus[channel.toLowerCase()] = true;
+                    } else {
+                        $scope.liveStatus[channel.toLowerCase()] = false;
+                    }
+                });
 
-        }
+        };
+
+        $scope.getChannel = function (channel) {
+            $http({
+                method: 'GET',
+                url: 'https://api.twitch.tv/kraken/channels/' + encodeURIComponent(channel) + '?callback=JSON_CALLBACK'
+            })
+                .success(function (data) {
+                    $scope.channel[data.channel.name] = data.channel;
+                });
+        };
+
+        $scope.getStreams = function () {
+            var streams = Array.prototype.join.call(arguments, ',');
+        };
         $scope.search.type = true;
+        $scope.sponsoredStreams = config.sponsored;
         $scope.doSearch();
     }]);

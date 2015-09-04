@@ -7,6 +7,11 @@
     <style>
         .pace{-webkit-pointer-events:none;pointer-events:none;-webkit-user-select:none;-moz-user-select:none;user-select:none;position:fixed;top:0;left:0;width:100%;-webkit-transform:translate3d(0, -50px, 0);-ms-transform:translate3d(0, -50px, 0);transform:translate3d(0, -50px, 0);-webkit-transition:-webkit-transform .5s ease-out;-ms-transition:-webkit-transform .5s ease-out;transition:transform .5s ease-out;z-index:2000}.pace.pace-active{-webkit-transform:translate3d(0, 0, 0);-ms-transform:translate3d(0, 0, 0);transform:translate3d(0, 0, 0)}.pace .pace-progress{display:block;position:fixed;z-index:2000;top:0;right:100%;width:100%;height:10px;background:#29d;pointer-events:none}
     </style>
+    <script>
+        window.paceOptions = {
+            ajax: true
+        }
+    </script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/pace/1.0.2/pace.min.js"></script>
     <link href='https://fonts.googleapis.com/css?family=Noto+Sans:400,700' rel='stylesheet' type="text/css">
     <link href="http://yui.yahooapis.com/pure/0.6.0/pure-min.css" rel="stylesheet" type="text/css">
@@ -37,7 +42,7 @@
         </form>
         <div class="pure-u-1-1">
             <div class="pure-u-5-12"></div>
-            <div class="pure-u-1-6 fixed animated" ng-class="{'show-search': displayed}"><button type="button" class="pure-button button-xsmall pure-input-1 full-width no-radius" ng-click="displayed = !displayed">Search</button></div>
+            <div class="pure-u-1-6 search-button fixed animated" ng-class="{'show-search': displayed}"><button type="button" class="pure-button button-xsmall pure-input-1 full-width no-radius" ng-click="displayed = !displayed">Search</button></div>
         </div>
         <div class="spacer"></div>
         <div class="pure-u-1-24"></div>
@@ -46,7 +51,10 @@
             <h2 ng-if="!!search.last">Results for {{search.last}}</h2>
             <div class="pure-u-1-1 pure-u-md-1-2 pure-u-lg-1-4 pure-u-xl-1-6 channel-box" ng-repeat="channel in channels">
                 <a ng-href="{{channel.url || channel.channel.url}}">
-                    <img class="pure-img" ng-src="{{channel.preview.large || channel.logo || default_profile_image}}" />
+                    <div class="pure-u-1-1" ng-init="checkLive(channel.name || channel.channel.name)">
+                        <img class="pure-img" ng-src="{{channel.preview.large || channel.logo || default_profile_image}}" />
+                        <div class="live-image" ng-class="{live: liveStatus[channel.name || channel.channel.name], offline: !liveStatus[channel.name || channel.channel.name]}"></div>
+                    </div>
                     <div>
                         <strong>{{channel.display_name || channel.channel.display_name}}</strong>
                     </div>
@@ -67,7 +75,27 @@
             <div class="fixed-button fixed-button-right" ng-if="links.next">
                 <button ng-click="doSearch('next')" type="button" class="pure-button button-primary">Next <i class="fa fa-chevron-right"></i></button>
             </div>
+            <!--
+            <h2>Sponsored Streams</h2>
+            <div class="pure-u-1-1 pure-u-md-1-2 pure-u-lg-1-4 channel-box sponsored-box" ng-repeat="channel in sponsoredStreams">
+                <a ng-href="{{channel.url || channel.channel.url}}">
+                    <img class="pure-img" ng-src="{{channel.preview.large || channel.logo || default_profile_image}}" />
+                    <div>
+                        <strong>{{channel.display_name || channel.channel.display_name}}</strong>
+                    </div>
+                    <div>
+                        <small>Playing <strong>{{channel.game}}</strong></small>
+                    </div>
+                    <div>
+                        <em class="channel-status">{{channel.status || channel.channel.status}}</em>
+                    </div>
+                    <div>
+                        <span title="Followers"><i class="fa fa-heart"></i> {{channel.followers || channel.channel.followers}}</span> | <span title="Views"><i class="fa fa-eye"></i> {{channel.views || channel.channel.views}}</span><span ng-if="!!channel.viewers"> | <span title="Current Viewers"><i class="fa fa-users"></i> {{channel.viewers}}</span></span>
+                    </div>
+                </a>
+            </div>
         </div>
+        -->
         <div class="pure-u-1-24"></div>
         <div class="pure-u-1-24"></div>
         <div class="pure-u-11-12">
