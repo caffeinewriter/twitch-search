@@ -55,6 +55,9 @@ searchApp.controller('SearchController', ['$scope', '$http', 'config',
             $scope.getUrl(action);
             $http({
                 method: 'JSONP',
+                headers: {
+                    "Client-ID": config.client_id
+                },
                 url: $scope.url
             })
                 .success(function (data) {
