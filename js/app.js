@@ -72,6 +72,9 @@ searchApp.controller('SearchController', ['$scope', '$http', 'config',
         $scope.checkLive = function (channel) {
             $http({
                 method: 'JSONP',
+                headers: {
+                    "Client-ID": config.client_id
+                },
                 url: 'https://api.twitch.tv/kraken/streams/' + encodeURIComponent(channel) + '?callback=JSON_CALLBACK'
             })
                 .success(function (data) {
@@ -88,6 +91,9 @@ searchApp.controller('SearchController', ['$scope', '$http', 'config',
         $scope.getChannel = function (channel) {
             $http({
                 method: 'GET',
+                headers: {
+                    "Client-ID": config.client_id
+                },
                 url: 'https://api.twitch.tv/kraken/channels/' + encodeURIComponent(channel) + '?callback=JSON_CALLBACK'
             })
                 .success(function (data) {
