@@ -26,7 +26,9 @@ searchApp.constant('config', {
         'blind',
         'new',
         'league',
-        'interact'
+        'interact',
+        'overwatch',
+        'charity'
     ]
 });
 
@@ -47,7 +49,7 @@ searchApp.controller('SearchController', ['$scope', '$http', 'config',
                 default:
                     $scope.search.query = $scope.search.query || config.random_terms[Math.floor(Math.random() * config.random_terms.length)];
                     $scope.search.last = $scope.search.query;
-                    $scope.url = 'https://api.twitch.tv/kraken/search/' + $scope.type + '?limit=' + config.limit + '&offset=0&q=' + encodeURIComponent($scope.search.query || 'random') + '&callback=JSON_CALLBACK';
+                    $scope.url = 'https://api.twitch.tv/kraken/search/' + $scope.type + '?limit=' + config.limit + '&offset=0&q=' + encodeURIComponent($scope.search.query || 'random') + '&callback=JSON_CALLBACK&client_id=' + config.client_id;
                     break;
             }
         };
@@ -55,9 +57,6 @@ searchApp.controller('SearchController', ['$scope', '$http', 'config',
             $scope.getUrl(action);
             $http({
                 method: 'JSONP',
-                headers: {
-                    "Client-ID": config.client_id
-                },
                 url: $scope.url
             })
                 .success(function (data) {
@@ -75,10 +74,7 @@ searchApp.controller('SearchController', ['$scope', '$http', 'config',
         $scope.checkLive = function (channel) {
             $http({
                 method: 'JSONP',
-                headers: {
-                    "Client-ID": config.client_id
-                },
-                url: 'https://api.twitch.tv/kraken/streams/' + encodeURIComponent(channel) + '?callback=JSON_CALLBACK'
+                url: 'https://api.twitch.tv/kraken/streams/' + encodeURIComponent(channel) + '?callback=JSON_CALLBACK&client_id=' + config.client_id
             })
                 .success(function (data) {
                     console.log(data.stream);
@@ -94,10 +90,7 @@ searchApp.controller('SearchController', ['$scope', '$http', 'config',
         $scope.getChannel = function (channel) {
             $http({
                 method: 'GET',
-                headers: {
-                    "Client-ID": config.client_id
-                },
-                url: 'https://api.twitch.tv/kraken/channels/' + encodeURIComponent(channel) + '?callback=JSON_CALLBACK'
+                url: 'https://api.twitch.tv/kraken/channels/' + encodeURIComponent(channel) + '?callback=JSON_CALLBACK&client_id=' + config.client_id
             })
                 .success(function (data) {
                     $scope.channel[data.channel.name] = data.channel;
