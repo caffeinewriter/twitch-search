@@ -6,12 +6,6 @@ var searchApp = angular.module('search', []);
 
 searchApp.constant('config', {
     limit: 24,
-    sponsored: [ //This will be a way to make money on this, for temporary "stickies" in the results
-        'caffeinewriter',
-        'forceofhell775',
-        'thebeardwhisperer',
-        'theno1alex'
-    ],
     client_id: 'kwt26b303n4vzix9ipdwytco8kqfa0q',
     default_profile_image: 'http://static-cdn.jtvnw.net/jtv_user_pictures/xarth/404_user_300x300.png',
     random_terms: [
@@ -41,10 +35,10 @@ searchApp.controller('SearchController', ['$scope', '$http', 'config',
             $scope.type = $scope.search.type ? 'streams' : 'channels';
             switch (action) {
                 case 'next':
-                    $scope.url = $scope.links.next + '&callback=JSON_CALLBACK';
+                    $scope.url = $scope.links.next + '&callback=JSON_CALLBACK&client_id=' + config.client_id;
                     break;
                 case 'prev':
-                    $scope.url = $scope.links.prev + '&callback=JSON_CALLBACK';
+                    $scope.url = $scope.links.prev + '&callback=JSON_CALLBACK&client_id=' + config.client_id;
                     break;
                 default:
                     $scope.search.query = $scope.search.query || config.random_terms[Math.floor(Math.random() * config.random_terms.length)];
@@ -101,6 +95,5 @@ searchApp.controller('SearchController', ['$scope', '$http', 'config',
             var streams = Array.prototype.join.call(arguments, ',');
         };
         $scope.search.type = true;
-        $scope.sponsoredStreams = config.sponsored;
         $scope.doSearch();
     }]);
