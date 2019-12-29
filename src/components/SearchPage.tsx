@@ -43,6 +43,16 @@ const PaginationButton = styled(Button)({
   },
 });
 
+const FullPageLoader = styled(Box)({
+  position: 'fixed',
+  top: '0',
+  left: '0',
+  width: '100%',
+  height: '100%',
+  backgroundColor: '#2D2D39',
+  zIndex: 999,
+});
+
 class SearchPage extends React.Component<SearchPageProps, SearchPageState> {
   defaultTerms = [
     'drunk',
@@ -56,7 +66,10 @@ class SearchPage extends React.Component<SearchPageProps, SearchPageState> {
     'apex',
   ];
 
-  async componentDidMount() {
+  async fetchInitialStreamData() {
+    this.setState({
+      loading: true,
+    });
     let term: string =
       this.props.match.params.term ||
       this.defaultTerms[Math.floor(Math.random() * this.defaultTerms.length)];
@@ -70,6 +83,16 @@ class SearchPage extends React.Component<SearchPageProps, SearchPageState> {
       loading: false,
       total,
     });
+  }
+
+  async componentDidMount() {
+    await this.fetchInitialStreamData();
+  }
+
+  async componentDidUpdate(prevProps: SearchPageProps) {
+    if (prevProps.location.pathname !== this.props.location.pathname) {
+      await this.fetchInitialStreamData();
+    }
   }
 
   async nextPage(): Promise<void> {
@@ -124,7 +147,7 @@ class SearchPage extends React.Component<SearchPageProps, SearchPageState> {
     return (
       <PageContainer>
         <>
-          <Typography variant='h4'>Results for {term}</Typography>
+          <Typography variant='h5'>Results for {term}</Typography>
           <Typography variant='subtitle1'>
             Showing {page * RESULTS_PER_PAGE + 1}-
             {Math.min((page + 1) * RESULTS_PER_PAGE, total)} of {total} results
