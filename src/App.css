@@ -1,7 +1,14 @@
 @import url('https://fonts.googleapis.com/css?family=Arimo|Titan+One&display=swap&subset=cyrillic,cyrillic-ext,greek,greek-ext,hebrew,latin-ext,vietnamese');
 
+html,
+body,
+#root,
 .App {
-  background-color: #282c34;
+  color: white;
+  background-color: #1c1d20;
+}
+
+.App {
   font-family: 'Arimo', 'Segoe UI', sans-serif;
   text-align: center;
 }

@@ -26,7 +26,7 @@ const ResponsiveCardMedia = styled(CardMedia)({
 
 const StreamTitle = styled(Typography)({
   fontWeight: 'bold',
-  fontSize: '1rem',
+  fontSize: '.9rem',
 });
 
 const StreamCard = styled(Card)({

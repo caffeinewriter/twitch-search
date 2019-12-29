@@ -67,6 +67,7 @@ export const searchStreams = async (
   live: boolean = true,
   offset: number = 0
 ): Promise<StreamSearchResult> => {
+  offset *= RESULTS_PER_PAGE;
   const res = await twitchClient.get(
     `search/${live ? 'streams' : 'channels'}?${qs.stringify({
       query,
