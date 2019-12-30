@@ -17,6 +17,7 @@ import ReactPlayer from 'react-player';
 import { Movie, SupervisorAccount, Visibility } from '@material-ui/icons';
 
 import { TwitchStream } from '../services/twitch';
+import { track } from '../services/insights';
 
 interface PreviewProps {
   stream: TwitchStream;
@@ -65,6 +66,13 @@ const StreamPreview: React.SFC<PreviewProps> = (props) => {
   const handlePopoverOpen = (
     event: React.MouseEvent<HTMLElement, MouseEvent>
   ) => {
+    track({
+      id: 'stream-preview',
+      parameters: {
+        channel: stream.channel.name,
+        game: stream.channel.game,
+      },
+    });
     setAnchorEl(event.currentTarget);
   };
 
