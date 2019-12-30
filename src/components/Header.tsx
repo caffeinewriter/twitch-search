@@ -71,7 +71,8 @@ const Header: React.SFC = () => {
   const history = useHistory();
 
   const handleSearch = () => {
-    history.push(`/search/live/${searchTerm}`);
+    if (searchTerm.length < 1) return;
+    history.push(`/search/${searchTerm}`);
   };
 
   const _handleKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {

@@ -77,6 +77,7 @@ const StreamPreview: React.SFC<PreviewProps> = (props) => {
     const delay = !open ? 1000 : 0;
     clearTimeout(timeoutId);
     setTimeoutId(setTimeout(() => setOpen(Boolean(anchorEl)), delay));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [anchorEl]);
 
   return (

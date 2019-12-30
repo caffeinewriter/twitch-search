@@ -31,16 +31,7 @@ class App extends React.Component {
         <Header />
         <Switch>
           <Route exact path='/' component={SearchPage} live={true}></Route>
-          <Route
-            path='/search/live/:term'
-            component={SearchPage}
-            live={true}
-          ></Route>
-          <Route
-            path='/search/:term'
-            component={SearchPage}
-            live={false}
-          ></Route>
+          <Route path='/search/:term' component={SearchPage} live={true} />
         </Switch>
         <Footer />
       </Router>
