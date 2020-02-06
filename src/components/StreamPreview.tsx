@@ -66,13 +66,6 @@ const StreamPreview: React.SFC<PreviewProps> = (props) => {
   const handlePopoverOpen = (
     event: React.MouseEvent<HTMLElement, MouseEvent>
   ) => {
-    track({
-      id: 'stream-preview',
-      parameters: {
-        channel: stream.channel.name,
-        game: stream.channel.game,
-      },
-    });
     setAnchorEl(event.currentTarget);
   };
 
@@ -84,7 +77,19 @@ const StreamPreview: React.SFC<PreviewProps> = (props) => {
   useEffect(() => {
     const delay = !open ? 1000 : 0;
     clearTimeout(timeoutId);
-    setTimeoutId(setTimeout(() => setOpen(Boolean(anchorEl)), delay));
+    setTimeoutId(setTimeout(() => {
+      const isOpen = Boolean(anchorEl);
+      setOpen(Boolean(anchorEl));
+      if (isOpen) {
+        track({
+          id: 'stream-preview',
+          parameters: {
+            channel: stream.channel.name,
+            game: stream.channel.game,
+          },
+        });
+      }
+    }, delay));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [anchorEl]);
 
