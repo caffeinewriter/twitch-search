@@ -10,7 +10,7 @@ import { init as initInsights } from './services/insights';
 
 import './App.css';
 
-class App extends React.Component {
+class App extends React.Component<{}, {}> {
   async componentDidMount() {
     initInsights();
   }
@@ -21,8 +21,8 @@ class App extends React.Component {
         <CssBaseline />
         <Header />
         <Switch>
-          <Route exact path='/' component={SearchPage} live={true}></Route>
-          <Route path='/search/:term' component={SearchPage} live={true} />
+          <Route<{live: boolean}> exact path='/' component={SearchPage} live={true} />
+          <Route<{live: boolean}> path='/search/:term' component={SearchPage} live={true} />
         </Switch>
         <Footer />
       </Router>
