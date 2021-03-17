@@ -1,4 +1,4 @@
-import React, { useState, ChangeEvent } from 'react';
+import React, { useState } from 'react';
 
 import { useHistory } from 'react-router-dom';
 
@@ -66,7 +66,7 @@ const SearchButton = styled(Button)({
   },
 });
 
-const Header: React.SFC = () => {
+const Header: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState<string>('');
   const history = useHistory();
 
@@ -92,7 +92,7 @@ const Header: React.SFC = () => {
           label='Search...'
           onChange={_handleChange}
           onKeyDown={_handleKeyDown}
-        ></SearchBox>
+        />
         <SearchButton onClick={handleSearch}>
           <Search />
           <Hidden lgDown> Search</Hidden>

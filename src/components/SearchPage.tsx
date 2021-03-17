@@ -67,21 +67,24 @@ const LoaderImage = styled('img')({
 
 class SearchPage extends React.Component<SearchPageProps, SearchPageState> {
   defaultTerms = [
-    'drunk',
-    'fail',
-    'overwatch',
-    'league',
-    'drops',
-    'csgo',
-    'charity',
-    'public',
     'apex',
+    'charity',
+    'csgo',
+    'drops',
+    'gamedev',
+    'league',
+    'music',
+    'overwatch',
+    'public',
+    'valheim',
+    'vtuber',
+    'warframe',
   ];
 
   async fetchInitialStreamData() {
     this.setState({
       loading: true,
-    });
+    } as SearchPageState);
     let term: string =
       this.props.match.params.term ||
       this.defaultTerms[Math.floor(Math.random() * this.defaultTerms.length)];
@@ -135,7 +138,7 @@ class SearchPage extends React.Component<SearchPageProps, SearchPageState> {
             streams,
             total,
             loading: false,
-          },
+          } as SearchPageState,
           () => window.scrollTo(0, 0)
         );
       }
@@ -160,7 +163,7 @@ class SearchPage extends React.Component<SearchPageProps, SearchPageState> {
             streams,
             total,
             loading: false,
-          },
+          } as SearchPageState,
           () => window.scrollTo(0, 0)
         );
       }

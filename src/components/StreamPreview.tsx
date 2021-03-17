@@ -56,7 +56,7 @@ const StreamWrapper = styled(Box)({
   overflow: 'hidden',
 });
 
-const StreamPreview: React.SFC<PreviewProps> = (props) => {
+const StreamPreview: React.FC<PreviewProps> = (props) => {
   const { stream } = props;
 
   const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
@@ -71,12 +71,14 @@ const StreamPreview: React.SFC<PreviewProps> = (props) => {
 
   const handlePopoverClose = () => {
     setAnchorEl(null);
-    clearTimeout(timeoutId);
+    if (typeof timeoutId !== 'undefined')
+      clearTimeout(timeoutId);
     setTimeoutId(undefined);
   };
   useEffect(() => {
     const delay = !open ? 1000 : 0;
-    clearTimeout(timeoutId);
+    if (typeof timeoutId !== 'undefined')
+      clearTimeout(timeoutId);
     setTimeoutId(setTimeout(() => {
       const isOpen = Boolean(anchorEl);
       setOpen(Boolean(anchorEl));
@@ -89,7 +91,7 @@ const StreamPreview: React.SFC<PreviewProps> = (props) => {
           },
         });
       }
-    }, delay));
+    }, delay) as number);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [anchorEl]);
 
@@ -115,16 +117,16 @@ const StreamPreview: React.SFC<PreviewProps> = (props) => {
               {stream.channel.display_name}
             </StreamTitle>
           }
-        ></CardHeader>
+        />
         <ResponsiveCardMedia
           image={stream.preview.large}
           title={stream.channel.status}
         />
         <CardContent>
-          <GameName variant='body2' component='p'>
+          <GameName variant='body2' display='block'>
             {stream.channel.game}
           </GameName>
-          <Typography variant='body2' component='p'>
+          <Typography variant='body2' display='block'>
             {stream.channel.status}
           </Typography>
         </CardContent>
