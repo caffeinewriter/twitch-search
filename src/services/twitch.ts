@@ -53,6 +53,11 @@ interface StreamSearchResult {
   streams: TwitchStream[];
 }
 
+interface ChannelSearchResult {
+  _total: number;
+  channels: TwitchChannel[];
+}
+
 const twitchClient = axios.create({
   baseURL: 'https://api.twitch.tv/kraken/',
   timeout: 5000,
@@ -64,12 +69,26 @@ const twitchClient = axios.create({
 
 export const searchStreams = async (
   query: string,
-  live: boolean = true,
   offset: number = 0
 ): Promise<StreamSearchResult> => {
   offset *= RESULTS_PER_PAGE;
   const res = await twitchClient.get(
-    `search/${live ? 'streams' : 'channels'}?${qs.stringify({
+    `search/streams?${qs.stringify({
+      query,
+      offset,
+      limit: RESULTS_PER_PAGE,
+    })}`
+  );
+  return res.data;
+};
+
+export const searchChannels = async (
+  query: string,
+  offset: number = 0
+): Promise<ChannelSearchResult> => {
+  offset *= RESULTS_PER_PAGE;
+  const res = await twitchClient.get(
+    `search/channels?${qs.stringify({
       query,
       offset,
       limit: RESULTS_PER_PAGE,
