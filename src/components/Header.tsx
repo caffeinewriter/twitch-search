@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 
-import { useHistory } from 'react-router-dom';
+import {
+  Link,
+  useHistory,
+} from 'react-router-dom';
 
 import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
@@ -8,34 +11,71 @@ import Hidden from '@material-ui/core/Hidden';
 import TextField from '@material-ui/core/TextField';
 import { styled } from '@material-ui/core/styles';
 
-import { Search } from '@material-ui/icons';
+import {
+  // FiberManualRecord,
+  Search as SearchIcon,
+  // Videocam as VideocamIcon
+} from '@material-ui/icons';
 
 const HeaderContainer = styled(Box)({
   height: '44px',
-  margin: '0 10px',
+  margin: '0 10px 15px',
   display: 'flex',
-  '@media (max-width: 500px)': {
+  // '@media (max-width: 619px)': {
+  '@media (max-width: 555px)': {
     height: '94px',
     flexWrap: 'wrap',
   },
 });
 
-const Logo = styled(Box)({
+const Logo = styled(Link)({
+  color: '#fff',
   height: '44px',
   fontFamily: '"Titan One", sans-serif',
   fontSize: '34px',
   lineHeight: '44px',
   padding: '0 1rem',
   flex: 'initial',
-  '@media (max-width: 500px)': {
+  textDecoration: 'none',
+  '&:hover': {
+    textDecoration: 'none',
+  },
+  // '@media (max-width: 619px)': {
+  '@media (max-width: 555px)': {
     fontSize: '24px',
+  },
+});
+
+// const Record = styled(FiberManualRecord)({
+//   animationDirection: 'alternate',
+//   animationDuration: '2s',
+//   animationIterationCount: 'infinite',
+//   animationName: 'red-pulse',
+//   animationTimingFunction: 'ease-in-out',
+//   marginRight: '8px',
+//   '@media (max-width: 1279px)': {
+//     marginRight: '0px',
+//   },
+// });
+
+// const Videocam = styled(VideocamIcon)({
+//   marginRight: '8px',
+//   '@media (max-width: 1279px)': {
+//     marginRight: '0px',
+//   },
+// });
+
+const Search = styled(SearchIcon)({
+  marginRight: '8px',
+  '@media (max-width: 1279px)': {
+    marginRight: '0px',
   },
 });
 
 const SearchContainer = styled(Box)({
   flex: 'auto',
   display: 'flex',
-  margin: '0 10px',
+  margin: '0 5px',
   padding: '0 1rem',
 });
 
@@ -66,14 +106,32 @@ const SearchButton = styled(Button)({
   },
 });
 
+// const LiveToggleButton = styled(Button)({
+//   color: 'white',
+//   '&:hover': {
+//     color: '#2D2D39',
+//     backgroundColor: 'white',
+//   }
+// })
+
 const Header: React.FC = () => {
-  const [searchTerm, setSearchTerm] = useState<string>('');
+  // const searchAllRegexp = /^\/search\/[^/]+\/all$/gi;
   const history = useHistory();
+  // const location = useLocation();
+  // const [searchLive, setSearchLive] = useState<boolean>(!searchAllRegexp.test(location.pathname));
+  const [searchTerm, setSearchTerm] = useState<string>('');
 
   const handleSearch = () => {
     if (searchTerm.length < 1) return;
+    // if (searchLive)
     history.push(`/search/${searchTerm}`);
+    // else
+    //   history.push(`/search/${searchTerm}/all`);
   };
+
+  // const toggleLive = () => {
+  //   setSearchLive(!searchLive);
+  // }
 
   const _handleKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
     if (e.key === 'Enter') handleSearch();
@@ -85,17 +143,34 @@ const Header: React.FC = () => {
 
   return (
     <HeaderContainer>
-      <Logo>SearchTwitch</Logo>
+      <Logo to="/">SearchTwitch</Logo>
       <SearchContainer>
         <SearchBox
           id='search-box'
           label='Search...'
           onChange={_handleChange}
           onKeyDown={_handleKeyDown}
+          aria-label='Search Box'
         />
-        <SearchButton onClick={handleSearch}>
+        {/*<LiveToggleButton onClick={toggleLive}>
+          {searchLive ? (
+            <>
+              <Record />
+              <Hidden mdDown> Live Channels</Hidden>
+            </>
+          ) : (
+            <>
+              <Videocam />
+              <Hidden mdDown> All Channels</Hidden>
+            </>
+          )}
+        </LiveToggleButton>*/}
+        <SearchButton
+          onClick={handleSearch}
+          aria-label="Search Button"
+        >
           <Search />
-          <Hidden lgDown> Search</Hidden>
+          <Hidden mdDown> Search</Hidden>
         </SearchButton>
       </SearchContainer>
     </HeaderContainer>

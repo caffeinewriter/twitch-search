@@ -14,13 +14,16 @@ import { styled } from '@material-ui/core/styles';
 
 import ReactPlayer from 'react-player';
 
-import { Movie, SupervisorAccount, Visibility } from '@material-ui/icons';
+import {
+  Movie,
+  SupervisorAccount
+} from '@material-ui/icons';
 
-import { TwitchStream } from '../services/twitch';
+import { TwitchChannel } from '../services/twitch';
 import { track } from '../services/insights';
 
 interface PreviewProps {
-  stream: TwitchStream;
+  channel: TwitchChannel;
 }
 
 const ResponsiveCardMedia = styled(CardMedia)({
@@ -57,7 +60,7 @@ const StreamWrapper = styled(Box)({
 });
 
 const StreamPreview: React.FC<PreviewProps> = (props) => {
-  const { stream } = props;
+  const { channel } = props;
 
   const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
   const [timeoutId, setTimeoutId] = useState<number | undefined>();
@@ -93,8 +96,8 @@ const StreamPreview: React.FC<PreviewProps> = (props) => {
         track({
           id: 'stream-preview',
           parameters: {
-            channel: stream.channel.name,
-            game: stream.channel.game,
+            channel: channel.name,
+            game: channel.game,
           },
         });
       }
@@ -106,8 +109,8 @@ const StreamPreview: React.FC<PreviewProps> = (props) => {
     <StreamCard>
       <CardActionArea
         component='a'
-        aria-label={`${stream.channel.display_name} playing ${stream.channel.game}`}
-        href={stream.channel.url}
+        aria-label={`${channel.display_name}'s channel`}
+        href={channel.url}
         target='_blank'
         rel='noopener'
         onMouseEnter={handlePopoverOpen}
@@ -116,40 +119,36 @@ const StreamPreview: React.FC<PreviewProps> = (props) => {
         <CardHeader
           avatar={
             <Avatar
-              alt={stream.channel.display_name}
-              src={useSmallChannelLogo(stream.channel.logo)}
+              alt={channel.display_name}
+              src={useSmallChannelLogo(channel.logo)}
             />
           }
           title={
             <StreamTitle variant='caption'>
-              {stream.channel.display_name}
+              {channel.display_name}
             </StreamTitle>
           }
         />
         <ResponsiveCardMedia
-          image={stream.preview.large}
-          title={stream.channel.status}
+          image={channel.video_banner}
+          title={channel.status}
         />
         <CardContent>
           <GameName variant='body2' display='block'>
-            {stream.channel.game}
+            {channel.game}
           </GameName>
           <Typography variant='body2' display='block'>
-            {stream.channel.status}
+            {channel.status}
           </Typography>
         </CardContent>
         <CardActions>
           <IconNumWrapper>
-            <Visibility />
-            <div>{stream.viewers.toLocaleString()}</div>
-          </IconNumWrapper>
-          <IconNumWrapper>
             <SupervisorAccount />
-            <div>{stream.channel.followers.toLocaleString()}</div>
+            <div>{channel.followers.toLocaleString()}</div>
           </IconNumWrapper>
           <IconNumWrapper>
             <Movie />
-            <div>{stream.channel.views.toLocaleString()}</div>
+            <div>{channel.views.toLocaleString()}</div>
           </IconNumWrapper>
         </CardActions>
       </CardActionArea>
@@ -169,7 +168,7 @@ const StreamPreview: React.FC<PreviewProps> = (props) => {
       >
         <StreamWrapper>
           <ReactPlayer
-            url={stream.channel.url}
+            url={channel.url}
             playing
             controls={false}
             volume={0}

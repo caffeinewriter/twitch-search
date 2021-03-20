@@ -12,7 +12,7 @@ import { NavigateBefore, NavigateNext } from '@material-ui/icons';
 import { searchStreams, TwitchStream } from '../services/twitch';
 import { track } from '../services/insights';
 import { RESULTS_PER_PAGE } from '../constants';
-import StreamPreview from './StreamPreview';
+import StreamPreview from '../components/StreamPreview';
 import TailSpin from '../assets/TailSpin.svg';
 
 interface SearchPageState {
@@ -23,11 +23,12 @@ interface SearchPageState {
   total: number;
 }
 
-interface SearchRouteProps {
-  term: string | undefined;
+export interface SearchRouteProps {
+  term?: string;
+  live?: string;
 }
 
-interface SearchPageProps extends RouteComponentProps<SearchRouteProps> {
+export interface SearchPageProps extends RouteComponentProps<SearchRouteProps> {
   live: boolean;
 }
 
@@ -65,7 +66,7 @@ const LoaderImage = styled('img')({
   transform: 'translate(-50%, -50%)',
 });
 
-class SearchPage extends React.Component<SearchPageProps, SearchPageState> {
+class Search extends React.Component<SearchPageProps, SearchPageState> {
   defaultTerms = [
     'apex',
     'charity',
@@ -89,7 +90,7 @@ class SearchPage extends React.Component<SearchPageProps, SearchPageState> {
       this.props.match.params.term ||
       this.defaultTerms[Math.floor(Math.random() * this.defaultTerms.length)];
 
-    const { streams, _total: total } = await searchStreams(term);
+    let { streams, _total: total } = await searchStreams(term);
     // let streams = chunk(results, DISPLAY_COLUMNS);
     this.setState(
       {
@@ -127,10 +128,10 @@ class SearchPage extends React.Component<SearchPageProps, SearchPageState> {
         loading: true,
       }),
       async () => {
+        // const { live } = this.props;
         const { page, term } = this.state;
         const { streams, _total: total } = await searchStreams(
           term,
-          undefined,
           page
         );
         this.setState(
@@ -152,10 +153,10 @@ class SearchPage extends React.Component<SearchPageProps, SearchPageState> {
         loading: true,
       }),
       async () => {
+        // const { live } = this.props;
         const { page, term } = this.state;
         const { streams, _total: total } = await searchStreams(
           term,
-          undefined,
           page
         );
         this.setState(
@@ -178,6 +179,7 @@ class SearchPage extends React.Component<SearchPageProps, SearchPageState> {
         </FullPageLoader>
       );
     }
+    // const { live } = this.props;
     const { page, streams, term, total } = this.state;
     return (
       <PageContainer>
@@ -185,7 +187,8 @@ class SearchPage extends React.Component<SearchPageProps, SearchPageState> {
           <Typography variant='h5'>Results for {term}</Typography>
           <Typography variant='subtitle1'>
             Showing {page * RESULTS_PER_PAGE + 1}-
-            {Math.min((page + 1) * RESULTS_PER_PAGE, total)} of {total} results
+            {Math.min((page + 1) * RESULTS_PER_PAGE, total)} of {total + ' '}
+            live results
           </Typography>
         </>
         <Grid container spacing={3} justify='space-evenly'>
@@ -214,4 +217,4 @@ class SearchPage extends React.Component<SearchPageProps, SearchPageState> {
   }
 }
 
-export default SearchPage;
+export default Search
