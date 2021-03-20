@@ -23,9 +23,9 @@ interface SearchPageState {
   total: number;
 }
 
-interface SearchRouteProps {
-  term: string | undefined;
-  live: string | undefined;
+export interface SearchRouteProps {
+  term?: string;
+  live?: string;
 }
 
 export interface SearchPageProps extends RouteComponentProps<SearchRouteProps> {
