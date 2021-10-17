@@ -79,6 +79,12 @@ const SearchContainer = styled(Box)({
   padding: '0 1rem',
 });
 
+const AlertContainer = styled(Box)({
+  padding: '0.5rem',
+  backgroundColor: '#F9A825',
+  fontSize: '1rem'
+})
+
 const SearchBox = styled(TextField)({
   flex: 'auto',
   '& input, & .MuiInputLabel-root': {
@@ -142,38 +148,43 @@ const Header: React.FC = () => {
   };
 
   return (
-    <HeaderContainer>
-      <Logo to="/">SearchTwitch</Logo>
-      <SearchContainer>
-        <SearchBox
-          id='search-box'
-          label='Search...'
-          onChange={_handleChange}
-          onKeyDown={_handleKeyDown}
-          aria-label='Search Box'
-        />
-        {/*<LiveToggleButton onClick={toggleLive}>
-          {searchLive ? (
-            <>
-              <Record />
-              <Hidden mdDown> Live Channels</Hidden>
-            </>
-          ) : (
-            <>
-              <Videocam />
-              <Hidden mdDown> All Channels</Hidden>
-            </>
-          )}
-        </LiveToggleButton>*/}
-        <SearchButton
-          onClick={handleSearch}
-          aria-label="Search Button"
-        >
-          <Search />
-          <Hidden mdDown> Search</Hidden>
-        </SearchButton>
-      </SearchContainer>
-    </HeaderContainer>
+    <>
+      <AlertContainer>
+        We're currently experiencing issues with the results returned from the Twitch API. You can follow the status of this issue <a href='https://github.com/caffeinewriter/twitch-search/issues/17'>here</a>.
+      </AlertContainer>
+      <HeaderContainer>
+        <Logo to="/">SearchStream</Logo>
+        <SearchContainer>
+          <SearchBox
+            id='search-box'
+            label='Search...'
+            onChange={_handleChange}
+            onKeyDown={_handleKeyDown}
+            aria-label='Search Box'
+          />
+          {/*<LiveToggleButton onClick={toggleLive}>
+            {searchLive ? (
+              <>
+                <Record />
+                <Hidden mdDown> Live Channels</Hidden>
+              </>
+            ) : (
+              <>
+                <Videocam />
+                <Hidden mdDown> All Channels</Hidden>
+              </>
+            )}
+          </LiveToggleButton>*/}
+          <SearchButton
+            onClick={handleSearch}
+            aria-label="Search Button"
+          >
+            <Search />
+            <Hidden mdDown> Search</Hidden>
+          </SearchButton>
+        </SearchContainer>
+      </HeaderContainer>
+    </>
   );
 };
 
