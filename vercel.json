@@ -1,0 +1,7 @@
+{
+  "functions": {
+    "pages/api/search/*": {
+      "memory": 512
+    }
+  }
+}
