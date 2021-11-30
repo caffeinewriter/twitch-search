@@ -1,4 +1,5 @@
 import Redis from 'ioredis';
+import logger from './logger';
 
 import { TwitchOauthResponse, TwitchSearchResults } from '../types/twitch';
 import { PaginationCursor } from '../types/api';
@@ -17,12 +18,17 @@ export async function getAuthHeaders(): Promise<Headers> {
   return reqHeaders;
 }
 
-export async function makeTwitchApiRequest<T>(url: string, isRetry: boolean = false): Promise<T> {
+export async function makeTwitchApiRequest<T>(
+  url: string,
+  isRetry: boolean = false
+): Promise<T> {
+  logger.debug('Attempting to request Twitch URL:', url);
   const headers = await getAuthHeaders();
   const res = await fetch(url, {
     headers,
   });
   if (res.status === 401 && !isRetry) {
+    logger.debug('Twitch token is invalid. Deleting potentially stale token.');
     await redis.del('twitch_token');
     return makeTwitchApiRequest(url, true);
   }
@@ -32,6 +38,7 @@ export async function makeTwitchApiRequest<T>(url: string, isRetry: boolean = fa
 export async function getTwitchToken(): Promise<string> {
   const token = await redis.get('twitch_token');
   if (!token) {
+    logger.debug('Attempting to fetch fresh Twitch token');
     const data: TwitchOauthResponse = await fetch(TWITCH_OAUTH_URL, {
       method: 'POST',
     }).then((res) => res.json());
@@ -51,11 +58,17 @@ export async function searchChannels(
   live: boolean,
   pagination?: PaginationCursor
 ): Promise<TwitchSearchResults> {
+  let searchLogMessage = `Searching for ${query} among ${
+    live ? 'live' : 'all'
+  } channels`;
   let url = `${TWITCH_API_BASE}/search/channels?query=${query}&live_only=${live}`;
   if (pagination && 'after' in pagination) {
     url += `&after=${pagination.after}`;
+    searchLogMessage += ` after cursor ${pagination.after}`;
   } else if (pagination && 'before' in pagination) {
     url += `&before=${pagination.before}`;
+    searchLogMessage += ` before cursor ${pagination.before}`;
   }
+  logger.debug(searchLogMessage);
   return makeTwitchApiRequest<TwitchSearchResults>(url);
 }
