@@ -1,14 +1,12 @@
-import Redis from 'ioredis';
 import logger from './logger';
+import redis from './redis';
 
-import { TwitchOauthResponse, TwitchSearchResults } from '../types/twitch';
-import { PaginationCursor } from '../types/api';
+import type { TwitchOauthResponse, TwitchSearchArgs, TwitchSearchResults } from '../types/twitch';
 
 // Constants
 const TWITCH_OAUTH_URL = `https://id.twitch.tv/oauth2/token?client_id=${process.env.TWITCH_CLIENT_ID}&client_secret=${process.env.TWITCH_CLIENT_SECRET}&grant_type=client_credentials`;
 const TWITCH_API_BASE = 'https://api.twitch.tv/helix';
 
-const redis = new Redis(process.env.REDIS_URL);
 
 export async function getAuthHeaders(): Promise<Headers> {
   const token = await getTwitchToken();
@@ -22,7 +20,7 @@ export async function makeTwitchApiRequest<T>(
   url: string,
   isRetry: boolean = false
 ): Promise<T> {
-  logger.debug('Attempting to request Twitch URL:', url);
+  logger.debug('Attempting to request Twitch URL', { url });
   const headers = await getAuthHeaders();
   const res = await fetch(url, {
     headers,
@@ -31,6 +29,11 @@ export async function makeTwitchApiRequest<T>(
     logger.debug('Twitch token is invalid. Deleting potentially stale token.');
     await redis.del('twitch_token');
     return makeTwitchApiRequest(url, true);
+  } else if (res.status === 401) {
+    logger.error("Failed to reauthorize Twitch app token!");
+    throw new Error('Unable to authorize with Twitch.');
+  } else if (res.status > 500) {
+    throw new Error('Unable to connect to Twitch due to a server error.');
   }
   return await res.json();
 }
@@ -53,17 +56,17 @@ export async function getTwitchToken(): Promise<string> {
   return token;
 }
 
-export async function searchChannels(
-  query: string,
-  live: boolean,
-  pagination?: PaginationCursor
-): Promise<TwitchSearchResults> {
+export async function searchChannels({
+  query,
+  live,
+  pagination,
+}: TwitchSearchArgs): Promise<TwitchSearchResults> {
   let searchLogMessage = `Searching for ${query} among ${
     live ? 'live' : 'all'
   } channels`;
   let url = `${TWITCH_API_BASE}/search/channels?query=${query}&live_only=${live}`;
   if (pagination && 'after' in pagination) {
-    url += `&after=${pagination.after}`;
+    url += `&after=${encodeURIComponent(pagination.after)}`;
     searchLogMessage += ` after cursor ${pagination.after}`;
   } else if (pagination && 'before' in pagination) {
     url += `&before=${pagination.before}`;
@@ -71,4 +74,13 @@ export async function searchChannels(
   }
   logger.debug(searchLogMessage);
   return makeTwitchApiRequest<TwitchSearchResults>(url);
+}
+
+export async function getStreams(ids: string | string[]) {
+  if (Array.isArray(ids)) {
+    ids = ids.join('&user_id=');
+  }
+  const url = `${TWITCH_API_BASE}/streams?user_id=${ids}&first=100`;
+
+  return makeTwitchApiRequest<any>(url);
 }

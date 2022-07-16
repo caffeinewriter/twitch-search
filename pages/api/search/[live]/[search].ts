@@ -12,7 +12,9 @@ export default async function handler(
   } else if (req.query.live === 'all') {
     live = false;
   } else {
-    return res.status(400).json({});
+    return res.status(400).json({
+      error: `Invalid parameter specified for 'live': ${req.query.live}`,
+    });
   }
   let search;
   if (typeof req.query.search !== 'string') {
@@ -39,6 +41,6 @@ export default async function handler(
       before,
     };
   }
-  const results = await searchChannels(search, live, pagination);
+  const results = await searchChannels({ query: search, live, pagination });
   res.status(200).json(results);
 }
