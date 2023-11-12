@@ -13,7 +13,7 @@
     "@types/react-dom": "16.9.0",
     "@types/react-router-dom": "^5.1.7",
     "@types/styled-components": "^4.4.3",
-    "axios": "^0.21.1",
+    "axios": "^1.6.0",
     "insights-js": "^1.2.10",
     "lodash": "^4.17.21",
     "react": "^16.14.0",
